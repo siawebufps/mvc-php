@@ -96,7 +96,23 @@ class ParticipanteDao {
 	    	$stm = $this->pdo->prepare("SELECT * FROM participante");
 	    	$stm->execute();
 
-	    	return $stm->fetchAll(PDO::FETCH_OBJ);
+	    	//var_dump($stm->fetchAll(PDO::FETCH_OBJ));
+	    	while($fila = $stm->fetch(PDO::FETCH_OBJ)) {
+	    		$p = new Participante();
+	    		$p->setNombre($fila->nombre);
+	    		$p->setEmail($fila->email);
+	    		$p->setCodigo($fila->codigo);
+	    		$p->setClave($fila->clave);
+	    		$result[] = $p;
+
+	    	}
+
+	    	//$res = $stm->fetchAll(PDO::FETCH_OBJ);
+
+
+
+
+	    	return $result;
     	}catch(Exception $e) {
 			die($e->getMessage());
 		}
